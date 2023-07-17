@@ -1,9 +1,11 @@
 import { createHtmlElement } from "src/helpers";
+import Pagination from "src/components/pagination/Pagination";
 
 export default class {
   private tableWinners: HTMLElement;
   private title: HTMLElement;
   private titlePage: HTMLElement;
+  private pagination: Pagination;
 
   constructor() {
     const wrapper = createHtmlElement(document.body, "section", "winners");
@@ -12,13 +14,14 @@ export default class {
     this.titlePage = createHtmlElement(wrapper, "h4", "", "Page #1");
     this.tableWinners = createHtmlElement(wrapper, "div", "table-winners");
 
-    const pagination = createHtmlElement(wrapper, "div", "pagination");
+    this.pagination = new Pagination(wrapper);
+    // const pagination = createHtmlElement(wrapper, "div", "pagination");
 
-    const prev = createHtmlElement(pagination, "button", "btn", "Prev");
-    prev.classList.add("btn-pagination");
+    // const prev = createHtmlElement(pagination, "button", "btn", "Prev");
+    // prev.classList.add("btn-pagination");
 
-    const next = createHtmlElement(pagination, "button", "btn", "Next");
-    next.classList.add("btn-pagination");
+    // const next = createHtmlElement(pagination, "button", "btn", "Next");
+    // next.classList.add("btn-pagination");
   }
 
   setParams({ num, page }: { num: number; page: number }) {

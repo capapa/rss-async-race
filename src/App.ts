@@ -3,7 +3,7 @@ import Winners from "src/components/winners/Winners";
 
 export default class App {
   constructor() {
-    //new Garage();
+    new Garage();
     new Winners();
   }
 }

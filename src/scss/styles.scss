@@ -47,23 +47,34 @@
   }
 }
 
+.track-container {
+  margin-bottom: 15px;
+
+  * {
+    margin-right: 5px;
+  }
+}
+
 .track {
   position: relative;
   margin: 5px 0 5px 0;
   height: 40px;
-  border-bottom: 1px dotted;
+  border-bottom: 1px dashed;
 
   &__car {
     position: absolute;
     left: 50px;
-    bottom: 1px;
-    width: 60px;
   }
 
   &__finish {
     position: absolute;
     right: 100px;
-    bottom: 5px;
     height: 30px;
+    bottom: 1px;
   }
+}
+
+.drive {
+  transition: 5s;
+  left: 500px;
 }

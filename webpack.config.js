@@ -18,6 +18,10 @@ const baseConfig = {
         use: ["ts-loader"],
         include: [path.resolve(__dirname, "src")],
       },
+      {
+        test: /\.html$|\.svg$/i,
+        loader: "html-loader",
+      },
     ],
   },
   resolve: {
