@@ -1,8 +1,8 @@
 import { createHtmlElement } from "src/helpers";
 
 export default class {
-  constructor() {
-    const wrapper = createHtmlElement(document.body, "section", "form-car");
+  constructor(garage: HTMLElement) {
+    const wrapper = createHtmlElement(garage, "section", "form-car");
 
     const rowCreate = createHtmlElement(wrapper, "div", "form-row");
 
