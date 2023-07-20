@@ -22,6 +22,12 @@ export default class {
     const wrapper = createHtmlElement(parent, "div", "pagination");
     wrapper.innerHTML = Pagination;
 
+    // const prev = createHtmlElement(pagination, "button", "btn", "Prev");
+    // prev.classList.add("btn-pagination");
+
+    // const next = createHtmlElement(pagination, "button", "btn", "Next");
+    // next.classList.add("btn-pagination");
+
     this.btnPrev = wrapper.children[0] as HTMLButtonElement;
     this.btnNext = wrapper.children[1] as HTMLButtonElement;
 

@@ -17,8 +17,9 @@ export default class {
   async getCars(page: number, limit: number): Promise<ICars> {
     const response = await fetch(`${this.path}?_page=${page}&_limit${limit}`);
     const count = response.headers.get("X-Total-Count") ?? 0;
+    const cars = await response.json();
     return {
-      cars: await response.json(),
+      cars,
       count: Number(count),
     };
   }
@@ -45,7 +46,7 @@ export default class {
     return await response.json();
   }
 
-  async deleteCar(car: ICar): Promise<ICar> {
+  async deleteCar(car: ICar): Promise<{}> {
     const response = await fetch(`${this.path}/${car.id}`, {
       method: Method.DELETE,
       headers: {

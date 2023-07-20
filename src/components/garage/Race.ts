@@ -1,16 +1,15 @@
+import { ICar } from "src/interfeces";
 import { createHtmlElement } from "src/helpers";
+import ApiGarage from "src/components/api/Garage";
 import Pagination from "src/components/pagination/Pagination";
 import Track from "src/components/garage/track/Track";
-import { ICar } from "src/interfeces";
-import ApiGarage from "src/components/api/Garage";
 
 export default class {
-  private api: ApiGarage;
-
   private title: HTMLElement;
   private titlePage: HTMLElement;
   private wrapperTrack: HTMLElement;
 
+  private api: ApiGarage;
   private paginator: Pagination;
 
   constructor(garage: HTMLElement) {
@@ -26,6 +25,9 @@ export default class {
     this.paginator = new Pagination(wrapper, this.showRace.bind(this));
 
     this.api = new ApiGarage();
+  }
+
+  init(): void {
     this.showRace();
   }
 
@@ -39,7 +41,7 @@ export default class {
   }
 
   renderCars(cars: ICar[]): void {
-    this.titlePage.textContent = `Page #${this.paginator.numPage}`;
+    this.setNumPage();
     this.wrapperTrack.innerHTML = "";
     cars.forEach((car: ICar) => this.renderCar(car));
   }

@@ -14,3 +14,14 @@ export interface ICars {
   cars: ICar[];
   count: number;
 }
+
+export interface IWinner {
+  id: number;
+  wins: number;
+  time: number;
+}
+
+export interface IWinners {
+  winners: IWinner[];
+  count: number;
+}
