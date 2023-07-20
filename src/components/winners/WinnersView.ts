@@ -5,7 +5,7 @@ export default class {
   private tableWinners: HTMLElement;
   private title: HTMLElement;
   private titlePage: HTMLElement;
-  private pagination: Pagination;
+  //private pagination: Pagination;
 
   constructor() {
     const wrapper = createHtmlElement(document.body, "section", "winners");
@@ -14,7 +14,7 @@ export default class {
     this.titlePage = createHtmlElement(wrapper, "h4", "", "Page #1");
     this.tableWinners = createHtmlElement(wrapper, "div", "table-winners");
 
-    this.pagination = new Pagination(wrapper);
+    //this.pagination = new Pagination(wrapper);
     // const pagination = createHtmlElement(wrapper, "div", "pagination");
 
     // const prev = createHtmlElement(pagination, "button", "btn", "Prev");

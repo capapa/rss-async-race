@@ -1,5 +1,5 @@
 import { createHtmlElement } from "src/helpers";
-import svgCar from "src/components/garage/track/car.svg";
+//import svgCar from "src/components/garage/track/car.svg";
 import TrackView from "src/components/garage/track/Track.html";
 
 export default class {
