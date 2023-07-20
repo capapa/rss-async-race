@@ -3,9 +3,14 @@ import Race from "src/components/garage/Race";
 import { createHtmlElement } from "src/helpers";
 
 export default class {
+  race: Race;
   constructor() {
     const wrapper = createHtmlElement(document.body, "section", "garage");
-    new FormView(wrapper);
-    const race = new Race(wrapper);
+    const form = new FormView(wrapper);
+    this.race = new Race(wrapper);
+  }
+
+  init() {
+    this.race.init();
   }
 }

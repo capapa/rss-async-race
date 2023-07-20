@@ -35,15 +35,20 @@
 .table-winners {
   display: grid;
   grid-template-columns: 1fr 1fr 2fr 1fr 1fr;
+  justify-items: stretch;
   width: 500px;
+  border-top: 1px solid black;
+  border-left: 1px solid black;
 
   &-header {
     font-weight: bold;
   }
 
-  * {
-    border: 1px solid;
+  & > div {
     padding-left: 5px;
+    text-align: center;
+    border-bottom: 1px solid black;
+    border-right: 1px solid black;
   }
 }
 

@@ -15,7 +15,7 @@ export default class {
   }
 
   async getCars(page: number, limit: number): Promise<ICars> {
-    const response = await fetch(`${this.path}?_page=${page}&_limit${limit}`);
+    const response = await fetch(`${this.path}?_page=${page}&_limit=${limit}`);
     const count = response.headers.get("X-Total-Count") ?? 0;
     const cars = await response.json();
     return {

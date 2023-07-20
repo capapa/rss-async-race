@@ -10,7 +10,7 @@ export default class {
   }
 
   async getWinners(page: number, limit: number, sort: SortWinners, order: Order): Promise<IWinners> {
-    const response = await fetch(`${this.path}?_page=${page}&_limit${limit}&_sort${sort}&_order${order}`);
+    const response = await fetch(`${this.path}?_page=${page}&_limit=${limit}&_sort=${sort}&_order=${order}`);
     const count = response.headers.get("X-Total-Count") ?? 0;
     const winners = await response.json();
     return {
