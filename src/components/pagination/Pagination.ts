@@ -20,16 +20,13 @@ export default class {
     this.cbRenderPage = cbRenderPage;
 
     const wrapper = createHtmlElement(parent, "div", "pagination");
-    wrapper.innerHTML = Pagination;
+    this.btnPrev = createHtmlElement(wrapper, "button", "btn", "Prev") as HTMLButtonElement;
+    this.btnNext = createHtmlElement(wrapper, "button", "btn", "Next") as HTMLButtonElement;
+  }
 
-    // const prev = createHtmlElement(pagination, "button", "btn", "Prev");
-    // prev.classList.add("btn-pagination");
-
-    // const next = createHtmlElement(pagination, "button", "btn", "Next");
-    // next.classList.add("btn-pagination");
-
-    this.btnPrev = wrapper.children[0] as HTMLButtonElement;
-    this.btnNext = wrapper.children[1] as HTMLButtonElement;
+  init() {
+    this.btnPrev.classList.add("btn-pagination");
+    this.btnNext.classList.add("btn-pagination");
 
     this.btnNext.onclick = () => this.nextPage();
     this.btnPrev.onclick = () => this.prevPage();

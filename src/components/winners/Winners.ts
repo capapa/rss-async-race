@@ -38,6 +38,7 @@ export default class {
   init() {
     this.svgCar.innerHTML = svgCarStr;
     this.svgCar = this.svgCar.children[0];
+    this.paginator.init();
 
     this.showTable();
   }

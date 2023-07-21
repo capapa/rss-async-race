@@ -68,6 +68,7 @@
 
   &__car {
     position: absolute;
+    display: inline-block;
     left: 50px;
   }
 
@@ -81,5 +82,5 @@
 
 .drive {
   transition: 5s;
-  left: 500px;
+  //left: 500px;
 }

@@ -46,8 +46,8 @@ export default class {
     return await response.json();
   }
 
-  async deleteCar(car: ICar): Promise<{}> {
-    const response = await fetch(`${this.path}/${car.id}`, {
+  async deleteCar(id: number): Promise<{}> {
+    const response = await fetch(`${this.path}/${id}`, {
       method: Method.DELETE,
       headers: {
         "Content-type": "application/json",

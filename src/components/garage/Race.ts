@@ -1,60 +1,110 @@
 import { ICar } from "src/interfeces";
-import { createHtmlElement } from "src/helpers";
+import { createHtmlElement, getRandomColor, getRandomName } from "src/helpers";
 import ApiGarage from "src/components/api/Garage";
 import Pagination from "src/components/pagination/Pagination";
 import Track from "src/components/garage/track/Track";
+import Form from "src/components/garage/Form";
 
 export default class {
   private title: HTMLElement;
   private titlePage: HTMLElement;
   private wrapperTrack: HTMLElement;
 
+  private form: Form;
   private api: ApiGarage;
   private paginator: Pagination;
+  private tracks: Track[];
 
-  constructor(garage: HTMLElement) {
+  constructor(garage: HTMLElement, form: Form) {
     const wrapper = createHtmlElement(garage, "section", "race");
 
     this.title = createHtmlElement(wrapper, "h2", "", "Garage (100)");
     this.titlePage = createHtmlElement(wrapper, "h4", "", "Page #1");
     this.wrapperTrack = createHtmlElement(wrapper, "div", "tracks");
 
-    // new Track(this.wrapperTrack, "TESLA", "#0FFAF0");
-    // new Track(this.wrapperTrack, "LADA", "#FF00A0");
-
-    this.paginator = new Pagination(wrapper, this.showRace.bind(this));
-
+    this.tracks = [];
+    this.form = form;
     this.api = new ApiGarage();
+    this.paginator = new Pagination(wrapper, this.showRace.bind(this));
   }
 
-  init(): void {
+  public init(): void {
+    this.paginator.init();
+    this.form.setCb(this.createCar.bind(this), this.updateCar.bind(this));
+
+    this.form.btnRace.onclick = () => this.race();
+    this.form.btnReset.onclick = () => this.reset();
+    this.form.btnGenerate.onclick = () => this.generate();
+
     this.showRace();
   }
 
-  async showRace(): Promise<void> {
+  private async showRace(): Promise<void> {
     const carsPromise = await this.api.getCars(this.paginator.numPage, this.paginator.limitPage);
     if (this.paginator.countElements !== carsPromise.count) {
       this.paginator.setParam(carsPromise.count);
       this.setTitle();
     }
-    this.renderCars(carsPromise.cars);
+    this.renderTracks(carsPromise.cars);
   }
 
-  renderCars(cars: ICar[]): void {
+  private renderTracks(cars: ICar[]): void {
+    this.tracks = [];
     this.setNumPage();
     this.wrapperTrack.innerHTML = "";
-    cars.forEach((car: ICar) => this.renderCar(car));
+    cars.forEach((car: ICar) => this.renderTrack(car));
   }
 
-  renderCar(car: ICar): void {
-    new Track(this.wrapperTrack, car.name, car.color);
+  private renderTrack(car: ICar): void {
+    const track = new Track(this.wrapperTrack, car.id, car.name, car.color);
+    track.init(this.form.selectTrack.bind(this.form), this.removeCar.bind(this));
+    this.tracks.push(track);
   }
 
-  setTitle(): void {
+  private setTitle(): void {
     this.title.textContent = `Garage (${this.paginator.countElements})`;
   }
 
-  setNumPage(): void {
+  private setNumPage(): void {
     this.titlePage.textContent = `Page #(${this.paginator.numPage})`;
+  }
+
+  private async createCar(car: ICar): Promise<void> {
+    await this.api.createCar(car);
+    this.showRace();
+  }
+
+  private async updateCar(car: ICar): Promise<void> {
+    await this.api.updateCar(car);
+    this.showRace();
+  }
+
+  private async removeCar(id: number): Promise<void> {
+    await this.api.deleteCar(id);
+    this.showRace();
+  }
+
+  private race(): void {
+    this.tracks.forEach((track) => {
+      track.setCarDrive();
+    });
+    this.form.btnRace.disabled = true;
+  }
+
+  private reset(): void {
+    this.tracks.forEach((track) => {
+      track.setCarInit();
+    });
+    this.form.btnRace.disabled = false;
+  }
+
+  private async generate(): Promise<void> {
+    const car = { id: 0, name: "", color: "" };
+    for (let i = 0; i < 10; i += 1) {
+      car.name = getRandomName();
+      car.color = getRandomColor();
+      await this.api.createCar(car);
+    }
+    this.showRace();
   }
 }

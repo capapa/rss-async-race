@@ -1,4 +1,4 @@
-import { StateLevel } from "src/types";
+import { EngineStatus, StateLevel } from "src/types";
 
 export interface IStateGame {
   stateLevels: StateLevel[];
@@ -24,4 +24,10 @@ export interface IWinner {
 export interface IWinners {
   winners: IWinner[];
   count: number;
+}
+
+export interface IEngine {
+  status: EngineStatus;
+  velocity: number;
+  distance: number;
 }
