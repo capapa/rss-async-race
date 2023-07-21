@@ -19,9 +19,16 @@ export default class {
     };
   }
 
-  async createWinner(): Promise<IWinner> {
+  async getWinner(id: number): Promise<IWinner> {
+    const response = await fetch(`${this.path}/${id}`);
+    if (response.status < 200 || response.status > 299) return { id, wins: 0, time: 0 };
+    return await response.json();
+  }
+
+  async createWinner(winner: IWinner): Promise<IWinner> {
     const response = await fetch(`${this.path}`, {
       method: Method.POST,
+      body: JSON.stringify(winner),
       headers: {
         "Content-type": "application/json",
       },
@@ -40,8 +47,8 @@ export default class {
     return await response.json();
   }
 
-  async deleteWinner(winner: IWinner): Promise<{}> {
-    const response = await fetch(`${this.path}/${winner.id}`, {
+  async deleteWinner(id: number): Promise<IWinner> {
+    const response = await fetch(`${this.path}/${id}`, {
       method: Method.DELETE,
       headers: {
         "Content-type": "application/json",

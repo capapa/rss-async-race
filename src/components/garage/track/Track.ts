@@ -17,8 +17,10 @@ export default class {
 
   private engine: IEngine;
   private apiCarEvents: ApiCarEvents;
+  private cbFinish: (track: this) => void;
 
   public car: ICar;
+  public finishTime: number;
 
   constructor(parent: HTMLElement, id: number, name: string, color: string) {
     const trackContainer = createHtmlElement(parent, "div", "track-container");
@@ -38,11 +40,14 @@ export default class {
 
     this.apiCarEvents = new ApiCarEvents();
 
+    this.cbFinish = () => {};
+    this.finishTime = 0;
     this.car = { id, name, color };
     this.engine = { status: "stopped", velocity: 0, distance: 0 };
   }
 
-  public init(cbSelect: (track: this) => void, cbRemove: (id: number) => void) {
+  public init(cbSelect: (track: this) => void, cbRemove: (id: number) => void, cbFinish: (track: this) => void) {
+    //public init(cbSelect: (track: this) => void, cbRemove: (id: number) => void) {
     this.initSvg();
     this.imgFinish.src = "dist/finish.jpg";
     this.btnB.disabled = true;
@@ -52,6 +57,8 @@ export default class {
 
     this.btnA.onclick = () => this.setCarDrive();
     this.btnB.onclick = () => this.setCarInit();
+
+    this.cbFinish = cbFinish;
   }
 
   private initSvg(): void {
@@ -75,14 +82,15 @@ export default class {
     this.btnA.disabled = true;
     this.btnB.disabled = false;
 
+    this.finishTime = 0;
     this.engine.status = "started";
     const response = await this.apiCarEvents.setStatusEngine(this.car.id, this.engine.status);
     this.engine.distance = response.distance;
     this.engine.velocity = response.velocity;
 
     this.engine.status = "drive";
-    const time = response.distance / response.velocity;
-    this.startAnimation(time);
+    const duration = response.distance / response.velocity;
+    this.startAnimation(duration);
 
     const responseDrive = await this.apiCarEvents.setStatusEngineDrive(this.car.id);
     if (!responseDrive.success) this.engine.status = "stopped";
@@ -98,11 +106,11 @@ export default class {
     this.btnB.disabled = true;
   }
 
-  private startAnimation(time: number) {
+  private startAnimation(duration: number) {
     let startTimestamp = 0;
     let currentX = 0;
     const finalLeft = document.body.clientWidth - 150;
-    const framesCount = (time / 1000) * 60;
+    const framesCount = (duration / 1000) * 60;
     const shift = finalLeft / framesCount;
 
     const step = (timestamp: number) => {
@@ -115,6 +123,10 @@ export default class {
       if (currentX < finalLeft && this.engine.status === "drive") {
         requestAnimationFrame(step);
       } else {
+        if (currentX >= finalLeft) {
+          this.finishTime = elapsed / 1000;
+          this.cbFinish(this);
+        }
         if (this.btnB.disabled) this.wrapperImgCar.style.transform = "";
         if (this.engine.status !== "stopped") this.engine.status = "stopped";
       }

@@ -1,8 +1,8 @@
 import { createHtmlElement } from "src/helpers";
 import { Order, SortWinners } from "src/enum";
 import { ICar, IWinner } from "src/interfeces";
-import ApiWinners from "src/components/api/Winners";
 import ApiGarage from "src/components/api/Garage";
+import ApiWinners from "src/components/api/Winners";
 import Pagination from "src/components/pagination/Pagination";
 import svgCarStr from "src/components/garage/track/car.svg";
 
@@ -99,11 +99,11 @@ export default class {
     const img = this.svgCar.cloneNode(true) as HTMLElement;
     img.style.fill = car.color;
 
-    createHtmlElement(this.tableWinners, "div", "", winner.id.toString());
+    createHtmlElement(this.tableWinners, "div", "", String(winner.id));
     const divImg = createHtmlElement(this.tableWinners, "div");
     createHtmlElement(this.tableWinners, "div", "", car.name);
-    createHtmlElement(this.tableWinners, "div", "", winner.wins.toString());
-    createHtmlElement(this.tableWinners, "div", "", winner.time.toString());
+    createHtmlElement(this.tableWinners, "div", "", String(winner.wins));
+    createHtmlElement(this.tableWinners, "div", "", String(winner.time.toFixed(3)));
 
     divImg.append(img);
   }

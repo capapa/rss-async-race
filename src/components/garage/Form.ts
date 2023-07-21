@@ -68,9 +68,9 @@ export default class {
 
   public updateTrack(cbCreateCar: (car: ICar) => void) {
     if (this.track) {
+      cbCreateCar(this.track.car);
       this.track.setName(this.inputNameUpdate.value);
       this.track.setColor(this.inputColorUpdate.value);
-      cbCreateCar(this.track.car);
     }
     this.inputNameUpdate.value = "";
     this.inputColorUpdate.value = "";

@@ -1,6 +1,7 @@
 import { ICar } from "src/interfeces";
 import { createHtmlElement, getRandomColor, getRandomName } from "src/helpers";
 import ApiGarage from "src/components/api/Garage";
+import ApiWinners from "src/components/api/Winners";
 import Pagination from "src/components/pagination/Pagination";
 import Track from "src/components/garage/track/Track";
 import Form from "src/components/garage/Form";
@@ -12,8 +13,12 @@ export default class {
 
   private form: Form;
   private api: ApiGarage;
+  private apiWinners: ApiWinners;
   private paginator: Pagination;
   private tracks: Track[];
+
+  private raceStarted: boolean;
+  private timeMin: number;
 
   constructor(garage: HTMLElement, form: Form) {
     const wrapper = createHtmlElement(garage, "section", "race");
@@ -22,9 +27,12 @@ export default class {
     this.titlePage = createHtmlElement(wrapper, "h4", "", "Page #1");
     this.wrapperTrack = createHtmlElement(wrapper, "div", "tracks");
 
+    this.raceStarted = false;
+    this.timeMin = 0;
     this.tracks = [];
     this.form = form;
     this.api = new ApiGarage();
+    this.apiWinners = new ApiWinners();
     this.paginator = new Pagination(wrapper, this.showRace.bind(this));
   }
 
@@ -57,7 +65,7 @@ export default class {
 
   private renderTrack(car: ICar): void {
     const track = new Track(this.wrapperTrack, car.id, car.name, car.color);
-    track.init(this.form.selectTrack.bind(this.form), this.removeCar.bind(this));
+    track.init(this.form.selectTrack.bind(this.form), this.removeCar.bind(this), this.callFinish.bind(this));
     this.tracks.push(track);
   }
 
@@ -81,14 +89,18 @@ export default class {
 
   private async removeCar(id: number): Promise<void> {
     await this.api.deleteCar(id);
+    await this.apiWinners.deleteWinner(id);
     this.showRace();
   }
 
   private race(): void {
+    this.raceStarted = true;
+    this.timeMin = 0;
     this.tracks.forEach((track) => {
       track.setCarDrive();
     });
     this.form.btnRace.disabled = true;
+    this.form.btnReset.disabled = true;
   }
 
   private reset(): void {
@@ -106,5 +118,20 @@ export default class {
       await this.api.createCar(car);
     }
     this.showRace();
+  }
+
+  private async callFinish(track: Track): Promise<void> {
+    if (this.raceStarted && !this.timeMin) {
+      this.timeMin = track.finishTime;
+      const winner = await this.apiWinners.getWinner(track.car.id);
+      const isNotExists = !winner.wins;
+      winner.wins += 1;
+      if (!winner.time || winner.time > this.timeMin) winner.time = this.timeMin;
+      if (isNotExists) {
+        await this.apiWinners.createWinner(winner);
+      } else {
+        await this.apiWinners.updateWinner(winner);
+      }
+    }
   }
 }
