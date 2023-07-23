@@ -3,10 +3,11 @@ import { Order, SortWinners } from "src/enum";
 import { ICar, IWinner } from "src/interfeces";
 import ApiGarage from "src/components/api/Garage";
 import ApiWinners from "src/components/api/Winners";
-import Pagination from "src/components/pagination/Pagination";
+import Pagination from "src/components/Pagination";
 import svgCarStr from "src/components/garage/track/car.svg";
 
 export default class {
+  public wrapper: HTMLElement;
   private tableWinners: HTMLElement;
   private title: HTMLElement;
   private titlePage: HTMLElement;
@@ -23,27 +24,26 @@ export default class {
     this.sort = SortWinners.Id;
     this.order = Order.Asc;
 
-    const wrapper = createHtmlElement(document.body, "section", "winners");
+    this.wrapper = createHtmlElement(document.body, "section", "winners");
 
-    this.title = createHtmlElement(wrapper, "h2", "", "Winners (10)");
-    this.titlePage = createHtmlElement(wrapper, "h4", "", "Page #1");
-    this.tableWinners = createHtmlElement(wrapper, "div", "table-winners");
+    this.title = createHtmlElement(this.wrapper, "h2", "", "Winners (10)");
+    this.titlePage = createHtmlElement(this.wrapper, "h4", "", "Page #1");
+    this.tableWinners = createHtmlElement(this.wrapper, "div", "table-winners");
     this.svgCar = document.createElement("svg");
 
-    this.paginator = new Pagination(wrapper, this.showTable.bind(this));
+    this.paginator = new Pagination(this.wrapper, this.showTable.bind(this));
     this.api = new ApiWinners();
     this.apiGarage = new ApiGarage();
   }
 
-  init() {
+  public init(): void {
     this.svgCar.innerHTML = svgCarStr;
     this.svgCar = this.svgCar.children[0];
     this.paginator.init();
-
-    this.showTable();
+    this.wrapper.style.display = "none";
   }
 
-  async showTable(): Promise<void> {
+  public async showTable(): Promise<void> {
     const winnersPromise = await this.api.getWinners(
       this.paginator.numPage,
       this.paginator.limitPage,
@@ -57,19 +57,19 @@ export default class {
     this.renderWinners(winnersPromise.winners);
   }
 
-  async renderWinners(winners: IWinner[]) {
+  private async renderWinners(winners: IWinner[]): Promise<void> {
     this.setNumPage();
     this.tableWinners.innerHTML = "";
     this.addRowHeader();
     const cars = await Promise.all(winners.map(({ id }) => this.apiGarage.getCar(id)));
-    winners.forEach((winner: IWinner, i) => this.addRow(winner, cars[i]));
+    winners.forEach((winner: IWinner, i) => this.addRow(i + 1, winner, cars[i]));
   }
 
-  addRowHeader() {
-    ["Id", "Car", "Name", "Wins", "Best time (seconds)"].forEach((name) => {
+  private addRowHeader(): void {
+    ["number", "Car", "Name", "Wins", "Best time (seconds)"].forEach((name) => {
       const item = createHtmlElement(this.tableWinners, "div", "table-winners-header");
 
-      if (["Id", "Wins", "Best time (seconds)"].includes(name)) {
+      if (["Wins", "Best time (seconds)"].includes(name)) {
         const anchor = createHtmlElement(this.tableWinners, "a", "table-winners-order", name) as HTMLAnchorElement;
         item.append(anchor);
 
@@ -95,11 +95,12 @@ export default class {
     });
   }
 
-  addRow(winner: IWinner, car: ICar) {
+  private addRow(i: number, winner: IWinner, car: ICar): void {
     const img = this.svgCar.cloneNode(true) as HTMLElement;
     img.style.fill = car.color;
+    img.style.height = "40px";
 
-    createHtmlElement(this.tableWinners, "div", "", String(winner.id));
+    createHtmlElement(this.tableWinners, "div", "", String(i));
     const divImg = createHtmlElement(this.tableWinners, "div");
     createHtmlElement(this.tableWinners, "div", "", car.name);
     createHtmlElement(this.tableWinners, "div", "", String(winner.wins));
@@ -108,11 +109,11 @@ export default class {
     divImg.append(img);
   }
 
-  setTitle(): void {
+  private setTitle(): void {
     this.title.textContent = `Winners (${this.paginator.countElements})`;
   }
 
-  setNumPage(): void {
+  private setNumPage(): void {
     this.titlePage.textContent = `Page #(${this.paginator.numPage})`;
   }
 }

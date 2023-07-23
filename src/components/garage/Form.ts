@@ -14,7 +14,7 @@ export default class {
   public btnReset: HTMLButtonElement;
   public btnGenerate: HTMLButtonElement;
 
-  track: Track | undefined;
+  private track: Track | undefined;
 
   constructor(garage: HTMLElement) {
     const wrapper = createHtmlElement(garage, "section", "form-car");
@@ -41,7 +41,7 @@ export default class {
     this.btnGenerate = createHtmlElement(rowBtn, "button", "btn", "Generate") as HTMLButtonElement;
   }
 
-  public init() {
+  public init(): void {
     this.btnUpdate.disabled = true;
   }
 
@@ -50,7 +50,7 @@ export default class {
     this.btnUpdate.onclick = () => this.updateTrack(cbUpdateCar);
   }
 
-  private createCar(cbCreateCar: (car: ICar) => void) {
+  private createCar(cbCreateCar: (car: ICar) => void): void {
     const car = { id: 0, name: "", color: "" };
     car.name = this.inputNameCreate.value;
     car.color = this.inputColorCreate.value;
@@ -59,18 +59,18 @@ export default class {
     this.inputColorCreate.value = "";
   }
 
-  public selectTrack(track: Track) {
+  public selectTrack(track: Track): void {
     this.btnUpdate.disabled = false;
     this.track = track;
     this.inputNameUpdate.value = track.car.name;
     this.inputColorUpdate.value = track.car.color;
   }
 
-  public updateTrack(cbCreateCar: (car: ICar) => void) {
+  public updateTrack(cbCreateCar: (car: ICar) => void): void {
     if (this.track) {
-      cbCreateCar(this.track.car);
       this.track.setName(this.inputNameUpdate.value);
       this.track.setColor(this.inputColorUpdate.value);
+      cbCreateCar(this.track.car);
     }
     this.inputNameUpdate.value = "";
     this.inputColorUpdate.value = "";

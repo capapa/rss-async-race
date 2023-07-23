@@ -1,18 +1,20 @@
+import { createHtmlElement } from "src/helpers";
 import Form from "src/components/garage/Form";
 import Race from "src/components/garage/Race";
-import { createHtmlElement } from "src/helpers";
 
 export default class {
-  form: Form;
-  race: Race;
+  public wrapper: HTMLElement;
+
+  private form: Form;
+  private race: Race;
 
   constructor() {
-    const wrapper = createHtmlElement(document.body, "section", "garage");
-    this.form = new Form(wrapper);
-    this.race = new Race(wrapper, this.form);
+    this.wrapper = createHtmlElement(document.body, "section", "garage");
+    this.form = new Form(this.wrapper);
+    this.race = new Race(this.wrapper, this.form);
   }
 
-  init() {
+  public init(): void {
     this.form.init();
     this.race.init();
   }

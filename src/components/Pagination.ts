@@ -1,5 +1,4 @@
 import { createHtmlElement } from "src/helpers";
-import Pagination from "src/components/pagination/Pagination.html";
 import { CallBack } from "src/types";
 
 export default class {
@@ -12,9 +11,9 @@ export default class {
   public countElements: number;
   public cbRenderPage: CallBack;
 
-  constructor(parent: HTMLElement, cbRenderPage: CallBack) {
+  constructor(parent: HTMLElement, cbRenderPage: CallBack, limitPage: number = 10) {
     this.numPage = 1;
-    this.limitPage = 10;
+    this.limitPage = limitPage;
     this.countPages = 1;
     this.countElements = 0;
     this.cbRenderPage = cbRenderPage;
@@ -24,7 +23,7 @@ export default class {
     this.btnNext = createHtmlElement(wrapper, "button", "btn", "Next") as HTMLButtonElement;
   }
 
-  init() {
+  init(): void {
     this.btnPrev.classList.add("btn-pagination");
     this.btnNext.classList.add("btn-pagination");
 
@@ -32,23 +31,23 @@ export default class {
     this.btnPrev.onclick = () => this.prevPage();
   }
 
-  get enabledNext() {
+  public get enabledNext(): boolean {
     return !this.btnNext.disabled;
   }
 
-  set enabledNext(value: boolean) {
+  public set enabledNext(value: boolean) {
     this.btnNext.disabled = !value;
   }
 
-  get enabledPrev() {
+  public get enabledPrev(): boolean {
     return !this.btnPrev.disabled;
   }
 
-  set enabledPrev(value: boolean) {
+  public set enabledPrev(value: boolean) {
     this.btnPrev.disabled = !value;
   }
 
-  setParam(countElements: number): void {
+  public setParam(countElements: number): void {
     if (this.countElements !== countElements) {
       this.countElements = countElements;
       this.countPages = Math.ceil(this.countElements / this.limitPage);

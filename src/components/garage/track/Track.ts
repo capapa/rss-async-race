@@ -1,8 +1,7 @@
-import { createElement, createHtmlElement } from "src/helpers";
+import { createHtmlElement } from "src/helpers";
 import svgCar from "src/components/garage/track/car.svg";
 import { ICar, IEngine } from "src/interfeces";
 import ApiCarEvents from "src/components/api/CarEvents";
-//import TrackView from "src/components/garage/track/Track.html";
 
 export default class {
   private wrapperTrack: HTMLElement;
@@ -46,8 +45,7 @@ export default class {
     this.engine = { status: "stopped", velocity: 0, distance: 0 };
   }
 
-  public init(cbSelect: (track: this) => void, cbRemove: (id: number) => void, cbFinish: (track: this) => void) {
-    //public init(cbSelect: (track: this) => void, cbRemove: (id: number) => void) {
+  public init(cbSelect: (track: this) => void, cbRemove: (id: number) => void, cbFinish: (track: this) => void): void {
     this.initSvg();
     this.imgFinish.src = "dist/finish.jpg";
     this.btnB.disabled = true;
@@ -72,18 +70,15 @@ export default class {
     this.spanNameCar.textContent = value;
   }
 
-  public setColor(value: string) {
+  public setColor(value: string): void {
     this.car.color = value;
     this.imgCar.style.fill = value;
   }
 
-  public async setCarDrive() {
-    if (this.engine.status !== "stopped") return;
-    this.btnA.disabled = true;
-    this.btnB.disabled = false;
-
+  public async setCarDrive(): Promise<void> {
     this.finishTime = 0;
     this.engine.status = "started";
+    this.btnA.disabled = true;
     const response = await this.apiCarEvents.setStatusEngine(this.car.id, this.engine.status);
     this.engine.distance = response.distance;
     this.engine.velocity = response.velocity;
@@ -92,43 +87,38 @@ export default class {
     const duration = response.distance / response.velocity;
     this.startAnimation(duration);
 
+    this.btnB.disabled = false;
     const responseDrive = await this.apiCarEvents.setStatusEngineDrive(this.car.id);
     if (!responseDrive.success) this.engine.status = "stopped";
   }
 
-  public async setCarInit() {
-    if (this.engine.status !== "stopped") {
-      await this.apiCarEvents.setStatusEngine(this.car.id, "stopped");
-      this.engine.status = "stopped";
-    }
+  public async setCarInit(): Promise<void> {
+    await this.apiCarEvents.setStatusEngine(this.car.id, "stopped");
+    this.engine.status = "stopped";
     this.wrapperImgCar.style.transform = "";
     this.btnA.disabled = false;
     this.btnB.disabled = true;
   }
 
-  private startAnimation(duration: number) {
+  private startAnimation(duration: number): void {
     let startTimestamp = 0;
     let currentX = 0;
     const finalLeft = document.body.clientWidth - 150;
     const framesCount = (duration / 1000) * 60;
     const shift = finalLeft / framesCount;
 
-    const step = (timestamp: number) => {
+    const step = (timestamp: number): void => {
       if (!startTimestamp) startTimestamp = timestamp;
       currentX += shift;
 
       const elapsed = timestamp - startTimestamp;
-      this.wrapperImgCar.style.transform = `translateX(${currentX}px)`;
+      if (this.engine.status === "drive") this.wrapperImgCar.style.transform = `translateX(${currentX}px)`;
 
       if (currentX < finalLeft && this.engine.status === "drive") {
         requestAnimationFrame(step);
-      } else {
-        if (currentX >= finalLeft) {
-          this.finishTime = elapsed / 1000;
-          this.cbFinish(this);
-        }
-        if (this.btnB.disabled) this.wrapperImgCar.style.transform = "";
-        if (this.engine.status !== "stopped") this.engine.status = "stopped";
+      } else if (currentX >= finalLeft) {
+        this.finishTime = elapsed / 1000;
+        this.cbFinish(this);
       }
     };
 

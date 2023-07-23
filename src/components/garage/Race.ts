@@ -2,9 +2,10 @@ import { ICar } from "src/interfeces";
 import { createHtmlElement, getRandomColor, getRandomName } from "src/helpers";
 import ApiGarage from "src/components/api/Garage";
 import ApiWinners from "src/components/api/Winners";
-import Pagination from "src/components/pagination/Pagination";
+import Pagination from "src/components/Pagination";
 import Track from "src/components/garage/track/Track";
 import Form from "src/components/garage/Form";
+import Popup from "src/components/Popup";
 
 export default class {
   private title: HTMLElement;
@@ -15,6 +16,7 @@ export default class {
   private api: ApiGarage;
   private apiWinners: ApiWinners;
   private paginator: Pagination;
+  private popup: Popup;
   private tracks: Track[];
 
   private raceStarted: boolean;
@@ -33,11 +35,13 @@ export default class {
     this.form = form;
     this.api = new ApiGarage();
     this.apiWinners = new ApiWinners();
-    this.paginator = new Pagination(wrapper, this.showRace.bind(this));
+    this.paginator = new Pagination(wrapper, this.showRace.bind(this), 7);
+    this.popup = new Popup(wrapper);
   }
 
   public init(): void {
     this.paginator.init();
+    this.popup.init();
     this.form.setCb(this.createCar.bind(this), this.updateCar.bind(this));
 
     this.form.btnRace.onclick = () => this.race();
@@ -103,16 +107,16 @@ export default class {
     this.form.btnReset.disabled = true;
   }
 
-  private reset(): void {
-    this.tracks.forEach((track) => {
-      track.setCarInit();
-    });
+  private async reset(): Promise<void> {
+    this.form.btnReset.disabled = true;
+    await Promise.all(this.tracks.map((track) => track.setCarInit()));
     this.form.btnRace.disabled = false;
+    this.popup.hide();
   }
 
   private async generate(): Promise<void> {
     const car = { id: 0, name: "", color: "" };
-    for (let i = 0; i < 10; i += 1) {
+    for (let i = 0; i < 100; i += 1) {
       car.name = getRandomName();
       car.color = getRandomColor();
       await this.api.createCar(car);
@@ -122,6 +126,8 @@ export default class {
 
   private async callFinish(track: Track): Promise<void> {
     if (this.raceStarted && !this.timeMin) {
+      this.form.btnReset.disabled = false;
+      this.popup.show(track.car.name, track.finishTime);
       this.timeMin = track.finishTime;
       const winner = await this.apiWinners.getWinner(track.car.id);
       const isNotExists = !winner.wins;
