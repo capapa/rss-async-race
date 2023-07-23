@@ -1,8 +1,4 @@
-import { EngineStatus, StateLevel } from "src/types";
-
-export interface IStateGame {
-  stateLevels: StateLevel[];
-}
+import { EngineStatus } from "src/types";
 
 export interface ICar {
   name: string;
