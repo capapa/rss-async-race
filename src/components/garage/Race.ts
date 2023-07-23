@@ -100,8 +100,9 @@ export default class {
   private race(): void {
     this.raceStarted = true;
     this.timeMin = 0;
+    const raceStarted = true;
     this.tracks.forEach((track) => {
-      track.setCarDrive();
+      track.setCarDrive(raceStarted);
     });
     this.form.btnRace.disabled = true;
     this.form.btnReset.disabled = true;

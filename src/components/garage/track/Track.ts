@@ -75,7 +75,7 @@ export default class {
     this.imgCar.style.fill = value;
   }
 
-  public async setCarDrive(): Promise<void> {
+  public async setCarDrive(raceStarted: boolean = false): Promise<void> {
     this.finishTime = 0;
     this.engine.status = "started";
     this.btnA.disabled = true;
@@ -87,7 +87,7 @@ export default class {
     const duration = response.distance / response.velocity;
     this.startAnimation(duration);
 
-    this.btnB.disabled = false;
+    this.btnB.disabled = raceStarted;
     const responseDrive = await this.apiCarEvents.setStatusEngineDrive(this.car.id);
     if (!responseDrive.success) this.engine.status = "stopped";
   }
