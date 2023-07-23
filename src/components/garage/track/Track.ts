@@ -103,8 +103,11 @@ export default class {
   private startAnimation(duration: number): void {
     let startTimestamp = 0;
     let currentX = 0;
-    const finalLeft = document.body.clientWidth - 150;
-    const framesCount = (duration / 1000) * 60;
+
+    const framesPerSecond = 1000 / 60;
+    const finalDistanceFromRigth = 150;
+    const finalLeft = document.body.clientWidth - finalDistanceFromRigth;
+    const framesCount = duration / framesPerSecond;
     const shift = finalLeft / framesCount;
 
     const step = (timestamp: number): void => {
