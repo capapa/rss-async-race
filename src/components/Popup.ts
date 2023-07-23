@@ -1,4 +1,4 @@
-import { createElement, createHtmlElement } from "../helpers";
+import { createHtmlElement } from "../helpers";
 
 export default class {
   private wrapper: HTMLElement;

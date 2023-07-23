@@ -23,12 +23,12 @@ export default class {
     this.btnNext = createHtmlElement(wrapper, "button", "btn", "Next") as HTMLButtonElement;
   }
 
-  init(): void {
+  public init(): void {
     this.btnPrev.classList.add("btn-pagination");
     this.btnNext.classList.add("btn-pagination");
 
-    this.btnNext.onclick = () => this.nextPage();
-    this.btnPrev.onclick = () => this.prevPage();
+    this.btnNext.onclick = (): void => this.nextPage();
+    this.btnPrev.onclick = (): void => this.prevPage();
   }
 
   public get enabledNext(): boolean {

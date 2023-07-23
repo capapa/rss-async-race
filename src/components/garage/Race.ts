@@ -44,9 +44,9 @@ export default class {
     this.popup.init();
     this.form.setCb(this.createCar.bind(this), this.updateCar.bind(this));
 
-    this.form.btnRace.onclick = () => this.race();
-    this.form.btnReset.onclick = () => this.reset();
-    this.form.btnGenerate.onclick = () => this.generate();
+    this.form.btnRace.onclick = (): void => this.race();
+    this.form.btnReset.onclick = (): Promise<void> => this.reset();
+    this.form.btnGenerate.onclick = (): void => this.generate();
 
     this.showRace();
   }
@@ -115,12 +115,12 @@ export default class {
     this.popup.hide();
   }
 
-  private async generate(): Promise<void> {
+  private generate(): void {
     const car = { id: 0, name: "", color: "" };
     for (let i = 0; i < 100; i += 1) {
       car.name = getRandomName();
       car.color = getRandomColor();
-      await this.api.createCar(car);
+      this.api.createCar(car);
     }
     this.showRace();
   }

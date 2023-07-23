@@ -38,7 +38,7 @@ export default class {
 
   public init(): void {
     this.svgCar.innerHTML = svgCarStr;
-    this.svgCar = this.svgCar.children[0];
+    this.svgCar = this.svgCar.children.item(0) as SVGElement;
     this.paginator.init();
     this.wrapper.style.display = "none";
   }
@@ -77,14 +77,14 @@ export default class {
         anchor.dataset.name = name;
         if (name.includes("time")) anchor.dataset.name = "time";
 
-        anchor.onclick = (e: Event) => {
+        anchor.onclick = (e: Event): void => {
           e.preventDefault();
 
-          const name = ((e.target as HTMLElement).dataset.name as string).toLowerCase();
-          if (this.sort === name) {
+          const nameCol = ((e.target as HTMLElement).dataset.name as string).toLowerCase();
+          if (this.sort === nameCol) {
             this.order = this.order === Order.Asc ? Order.Desc : Order.Asc;
           } else {
-            this.sort = name as SortWinners;
+            this.sort = nameCol as SortWinners;
           }
 
           this.showTable();

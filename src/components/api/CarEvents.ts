@@ -10,18 +10,18 @@ export default class {
     this.path = `${URL}/${Path.Engine}`;
   }
 
-  async setStatusEngine(id: number, status: EngineStatus): Promise<IEngine> {
+  public async setStatusEngine(id: number, status: EngineStatus): Promise<IEngine> {
     const response = await fetch(`${this.path}?id=${id}&status=${status}`, {
       method: Method.PATCH,
     });
-    return await response.json();
+    return response.json();
   }
 
-  async setStatusEngineDrive(id: number): Promise<{ success: boolean }> {
+  public async setStatusEngineDrive(id: number): Promise<{ success: boolean }> {
     const response = await fetch(`${this.path}?id=${id}&status=drive`, {
       method: Method.PATCH,
     });
     if (response.status < 200 || response.status > 299) return { success: false };
-    return await response.json();
+    return response.json();
   }
 }

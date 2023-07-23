@@ -19,10 +19,10 @@ export default class {
     };
   }
 
-  async getWinner(id: number): Promise<IWinner> {
+  public async getWinner(id: number): Promise<IWinner> {
     const response = await fetch(`${this.path}/${id}`);
     if (response.status < 200 || response.status > 299) return { id, wins: 0, time: 0 };
-    return await response.json();
+    return response.json();
   }
 
   public async createWinner(winner: IWinner): Promise<IWinner> {
@@ -33,7 +33,7 @@ export default class {
         "Content-type": "application/json",
       },
     });
-    return await response.json();
+    return response.json();
   }
 
   public async updateWinner(winner: IWinner): Promise<IWinner> {
@@ -44,7 +44,7 @@ export default class {
         "Content-type": "application/json",
       },
     });
-    return await response.json();
+    return response.json();
   }
 
   public async deleteWinner(id: number): Promise<IWinner> {
@@ -54,6 +54,6 @@ export default class {
         "Content-type": "application/json",
       },
     });
-    return await response.json();
+    return response.json();
   }
 }

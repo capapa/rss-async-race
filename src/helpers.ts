@@ -6,7 +6,7 @@ export function createElement<T>(
   className: string = "",
   textContent: string = ""
 ): T {
-  const node = document.createElement(tagName) as HTMLElement;
+  const node = document.createElement(tagName);
   if (className) node.classList.add(className);
   if (textContent) node.textContent = textContent;
   if (parent) parent.append(node);
@@ -22,16 +22,16 @@ export function createHtmlElement(
   return createElement<HTMLElement>(parent, tagName, className, textContent);
 }
 
-export function getRandomColor() {
+export function getRandomColor(): string {
   const letters = "0123456789ABCDEF";
   let color = "#";
-  for (var i = 0; i < 6; i++) {
+  for (let i = 0; i < 6; i += 1) {
     color += letters[Math.floor(Math.random() * 16)];
   }
   return color;
 }
 
-export function getRandomName() {
+export function getRandomName(): string {
   const name = NAMES_CAR[Math.floor(Math.random() * NAMES_CAR.length)];
   const model = MODEL_CAR[Math.floor(Math.random() * MODEL_CAR.length)];
   return `${name} ${model}`;

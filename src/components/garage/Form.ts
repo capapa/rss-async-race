@@ -45,9 +45,9 @@ export default class {
     this.btnUpdate.disabled = true;
   }
 
-  public setCb(cbCreateCar: (car: ICar) => void, cbUpdateCar: (car: ICar) => void) {
-    this.btnCreate.onclick = () => this.createCar(cbCreateCar);
-    this.btnUpdate.onclick = () => this.updateTrack(cbUpdateCar);
+  public setCb(cbCreateCar: (car: ICar) => void, cbUpdateCar: (car: ICar) => void): void {
+    this.btnCreate.onclick = (): void => this.createCar(cbCreateCar);
+    this.btnUpdate.onclick = (): void => this.updateTrack(cbUpdateCar);
   }
 
   private createCar(cbCreateCar: (car: ICar) => void): void {

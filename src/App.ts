@@ -13,16 +13,16 @@ export default class App {
     this.winners = new Winners();
   }
 
-  public init() {
+  public init(): void {
     this.header.init();
     this.garage.init();
     this.winners.init();
 
-    this.header.btnGarage.onclick = () => {
+    this.header.btnGarage.onclick = (): void => {
       this.garage.wrapper.style.display = "block";
       this.winners.wrapper.style.display = "none";
     };
-    this.header.btnWinners.onclick = () => {
+    this.header.btnWinners.onclick = (): void => {
       this.garage.wrapper.style.display = "none";
       this.winners.wrapper.style.display = "block";
       this.winners.showTable();

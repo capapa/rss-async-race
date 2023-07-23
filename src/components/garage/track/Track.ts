@@ -39,7 +39,7 @@ export default class {
 
     this.apiCarEvents = new ApiCarEvents();
 
-    this.cbFinish = () => {};
+    this.cbFinish = (): void => {};
     this.finishTime = 0;
     this.car = { id, name, color };
     this.engine = { status: "stopped", velocity: 0, distance: 0 };
@@ -50,11 +50,11 @@ export default class {
     this.imgFinish.src = "dist/finish.jpg";
     this.btnB.disabled = true;
 
-    this.btnSelect.onclick = () => cbSelect(this);
-    this.btnRemove.onclick = () => cbRemove(this.car.id);
+    this.btnSelect.onclick = (): void => cbSelect(this);
+    this.btnRemove.onclick = (): void => cbRemove(this.car.id);
 
-    this.btnA.onclick = () => this.setCarDrive();
-    this.btnB.onclick = () => this.setCarInit();
+    this.btnA.onclick = (): Promise<void> => this.setCarDrive();
+    this.btnB.onclick = (): Promise<void> => this.setCarInit();
 
     this.cbFinish = cbFinish;
   }
