@@ -1,6 +1,6 @@
-import { URL } from "src/const";
-import { Method, Path } from "src/enum";
-import { ICar, ICars } from "src/interfeces";
+import { URL } from "src/constants/const";
+import { Method, Path } from "src/components/api/enum";
+import { ICar, ICars } from "src/constants/interfeces";
 
 export default class {
   private path: string;

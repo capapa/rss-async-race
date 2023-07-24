@@ -1,4 +1,4 @@
-import { createHtmlElement } from "src/helpers";
+import { createHtmlElement } from "src/utils/helpers";
 
 export default class {
   public btnGarage: HTMLElement;

@@ -1,5 +1,5 @@
-import { createHtmlElement } from "src/helpers";
-import { CallBack } from "src/types";
+import { createHtmlElement } from "src/utils/helpers";
+import { CallBack } from "src/constants/types";
 
 export default class {
   private btnNext: HTMLButtonElement;

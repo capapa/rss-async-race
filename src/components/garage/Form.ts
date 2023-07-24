@@ -1,6 +1,6 @@
-import { createHtmlElement } from "src/helpers";
+import { createHtmlElement } from "src/utils/helpers";
 import Track from "src/components/garage/track/Track";
-import { ICar } from "src/src/interfeces";
+import { ICar } from "src/constants/interfeces";
 
 export default class {
   private inputNameCreate: HTMLInputElement;
@@ -56,7 +56,7 @@ export default class {
     car.color = this.inputColorCreate.value;
     cbCreateCar(car);
     this.inputNameCreate.value = "";
-    this.inputColorCreate.value = "";
+    this.inputColorCreate.value = "#FFFFFF";
   }
 
   public selectTrack(track: Track): void {
@@ -73,7 +73,7 @@ export default class {
       cbCreateCar(this.track.car);
     }
     this.inputNameUpdate.value = "";
-    this.inputColorUpdate.value = "";
+    this.inputColorUpdate.value = "#FFFFFF";
     this.track = undefined;
     this.btnUpdate.disabled = true;
   }

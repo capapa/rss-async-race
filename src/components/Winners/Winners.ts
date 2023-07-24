@@ -1,9 +1,9 @@
-import { createHtmlElement } from "src/helpers";
-import { Order, SortWinners } from "src/enum";
-import { ICar, IWinner } from "src/interfeces";
+import { createHtmlElement } from "src/utils/helpers";
+import { Order, SortWinners } from "src/constants/enum";
+import { ICar, IWinner } from "src/src/constants/interfeces";
 import ApiGarage from "src/components/api/Garage";
 import ApiWinners from "src/components/api/Winners";
-import Pagination from "src/components/Pagination";
+import Pagination from "src/components/Pagination/Pagination";
 import svgCarStr from "src/components/garage/track/car.svg";
 
 export default class {

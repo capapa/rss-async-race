@@ -1,4 +1,4 @@
-import { MODEL_CAR, NAMES_CAR } from "./const";
+import { MODEL_CAR, NAMES_CAR } from "../constants/const";
 
 export function createElement<T>(
   parent: HTMLElement | null,

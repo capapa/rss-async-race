@@ -1,6 +1,6 @@
 import Garage from "src/components/garage/Garage";
-import Winners from "src/components/Winners";
-import Header from "src/components/Header";
+import Winners from "src/components/Winners/Winners";
+import Header from "src/components/Header/Header";
 
 export default class App {
   private header: Header;

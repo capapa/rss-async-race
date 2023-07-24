@@ -1,6 +1,7 @@
-import { URL } from "src/const";
-import { Method, Path, Order, SortWinners } from "src/enum";
-import { IWinner, IWinners } from "src/interfeces";
+import { URL } from "src/constants/const";
+import { Method, Path } from "src/components/api/enum";
+import { Order, SortWinners } from "src/constants/enum";
+import { IWinner, IWinners } from "src/constants/interfeces";
 
 export default class {
   private path: string;

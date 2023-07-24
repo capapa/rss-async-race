@@ -1,7 +1,7 @@
-import { URL } from "src/const";
-import { Method, Path } from "src/enum";
-import { IEngine } from "src/interfeces";
-import { EngineStatus } from "src/src/types";
+import { URL } from "src/constants/const";
+import { Method, Path } from "src/components/api/enum";
+import { IEngine } from "src/constants/interfeces";
+import { EngineStatus } from "src/constants/types";
 
 export default class {
   private path: string;

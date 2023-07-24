@@ -1,4 +1,4 @@
-import { createHtmlElement } from "src/helpers";
+import { createHtmlElement } from "src/utils/helpers";
 import Form from "src/components/garage/Form";
 import Race from "src/components/garage/Race";
 

@@ -1,4 +1,4 @@
-import { EngineStatus } from "src/types";
+import { EngineStatus } from "src/constants/types";
 
 export interface ICar {
   name: string;

@@ -1,11 +1,11 @@
-import { ICar } from "src/interfeces";
-import { createHtmlElement, getRandomColor, getRandomName } from "src/helpers";
+import { ICar } from "src/constants/interfeces";
+import { createHtmlElement, getRandomColor, getRandomName } from "src/utils/helpers";
 import ApiGarage from "src/components/api/Garage";
 import ApiWinners from "src/components/api/Winners";
-import Pagination from "src/components/Pagination";
+import Pagination from "src/components/Pagination/Pagination";
 import Track from "src/components/garage/track/Track";
 import Form from "src/components/garage/Form";
-import Popup from "src/components/Popup";
+import Popup from "src/components/Popup/Popup";
 
 export default class {
   private title: HTMLElement;

@@ -1,6 +1,6 @@
-import { createHtmlElement } from "src/helpers";
+import { createHtmlElement } from "src/utils/helpers";
 import svgCar from "src/components/garage/track/car.svg";
-import { ICar, IEngine } from "src/interfeces";
+import { ICar, IEngine } from "src/constants/interfeces";
 import ApiCarEvents from "src/components/api/CarEvents";
 
 export default class {
