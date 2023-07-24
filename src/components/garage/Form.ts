@@ -56,7 +56,7 @@ export default class {
     car.color = this.inputColorCreate.value;
     cbCreateCar(car);
     this.inputNameCreate.value = "";
-    this.inputColorCreate.value = "#FFFFFF";
+    this.inputColorCreate.value = "#000000";
   }
 
   public selectTrack(track: Track): void {
@@ -73,7 +73,7 @@ export default class {
       cbCreateCar(this.track.car);
     }
     this.inputNameUpdate.value = "";
-    this.inputColorUpdate.value = "#FFFFFF";
+    this.inputColorUpdate.value = "#000000";
     this.track = undefined;
     this.btnUpdate.disabled = true;
   }
