@@ -1,6 +1,6 @@
 import { createHtmlElement } from "src/utils/helpers";
 
-export default class {
+export default class Popup {
   private wrapper: HTMLElement;
   private span: HTMLElement;
 

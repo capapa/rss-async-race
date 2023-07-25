@@ -2,7 +2,7 @@ import { URL } from "src/constants/const";
 import { Method, Path } from "src/components/api/enum";
 import { ICar, ICars } from "src/constants/interfeces";
 
-export default class {
+export default class Garage {
   private path: string;
 
   constructor() {

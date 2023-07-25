@@ -6,7 +6,7 @@ import ApiWinners from "src/components/api/Winners";
 import Pagination from "src/components/Pagination/Pagination";
 import svgCarStr from "src/components/garage/track/car.svg";
 
-export default class {
+export default class Winners {
   public wrapper: HTMLElement;
   private tableWinners: HTMLElement;
   private title: HTMLElement;

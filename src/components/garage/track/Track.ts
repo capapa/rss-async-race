@@ -3,7 +3,7 @@ import svgCar from "src/components/garage/track/car.svg";
 import { ICar, IEngine } from "src/constants/interfeces";
 import ApiCarEvents from "src/components/api/CarEvents";
 
-export default class {
+export default class Track {
   private wrapperTrack: HTMLElement;
   private spanNameCar: HTMLElement;
   private wrapperImgCar: HTMLElement;

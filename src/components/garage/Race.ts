@@ -7,7 +7,7 @@ import Track from "src/components/garage/track/Track";
 import Form from "src/components/garage/Form";
 import Popup from "src/components/Popup/Popup";
 
-export default class {
+export default class Race {
   private title: HTMLElement;
   private titlePage: HTMLElement;
   private wrapperTrack: HTMLElement;

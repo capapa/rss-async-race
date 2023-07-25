@@ -3,7 +3,7 @@ import { Method, Path } from "src/components/api/enum";
 import { Order, SortWinners } from "src/constants/enum";
 import { IWinner, IWinners } from "src/constants/interfeces";
 
-export default class {
+export default class Winners {
   private path: string;
 
   constructor() {

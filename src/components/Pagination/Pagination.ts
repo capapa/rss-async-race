@@ -1,7 +1,7 @@
 import { createHtmlElement } from "src/utils/helpers";
 import { CallBack } from "src/constants/types";
 
-export default class {
+export default class Pagination {
   private btnNext: HTMLButtonElement;
   private btnPrev: HTMLButtonElement;
 

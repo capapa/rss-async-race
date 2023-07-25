@@ -2,7 +2,7 @@ import { createHtmlElement } from "src/utils/helpers";
 import Track from "src/components/garage/track/Track";
 import { ICar } from "src/constants/interfeces";
 
-export default class {
+export default class Form {
   private inputNameCreate: HTMLInputElement;
   private inputColorCreate: HTMLInputElement;
   private inputNameUpdate: HTMLInputElement;

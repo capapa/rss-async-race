@@ -3,7 +3,7 @@ import { Method, Path } from "src/components/api/enum";
 import { IEngine } from "src/constants/interfeces";
 import { EngineStatus } from "src/constants/types";
 
-export default class {
+export default class CarEvents {
   private path: string;
 
   constructor() {

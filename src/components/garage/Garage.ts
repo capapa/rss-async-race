@@ -2,7 +2,7 @@ import { createHtmlElement } from "src/utils/helpers";
 import Form from "src/components/garage/Form";
 import Race from "src/components/garage/Race";
 
-export default class {
+export default class Garage {
   public wrapper: HTMLElement;
 
   private form: Form;
