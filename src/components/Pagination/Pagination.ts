@@ -4,6 +4,7 @@ import { CallBack } from "src/constants/types";
 export default class Pagination {
   private btnNext: HTMLButtonElement;
   private btnPrev: HTMLButtonElement;
+  private disabledButtons: boolean;
 
   public numPage: number;
   public limitPage: number;
@@ -12,6 +13,7 @@ export default class Pagination {
   public cbRenderPage: CallBack;
 
   constructor(parent: HTMLElement, cbRenderPage: CallBack, limitPage: number = 10) {
+    this.disabledButtons = false;
     this.numPage = 1;
     this.limitPage = limitPage;
     this.countPages = 1;
@@ -31,61 +33,47 @@ export default class Pagination {
     this.btnPrev.onclick = (): void => this.prevPage();
   }
 
-  public get enabledNext(): boolean {
-    return !this.btnNext.disabled;
+  private updateEnabled(): void {
+    if (this.disabled) {
+      this.btnNext.disabled = true;
+      this.btnPrev.disabled = true;
+    } else {
+      this.btnNext.disabled = this.numPage === this.countPages;
+      this.btnPrev.disabled = this.numPage === 1;
+    }
   }
 
-  public set enabledNext(value: boolean) {
-    this.btnNext.disabled = !value;
+  public get disabled(): boolean {
+    return this.disabledButtons;
   }
 
-  public get enabledPrev(): boolean {
-    return !this.btnPrev.disabled;
-  }
-
-  public set enabledPrev(value: boolean) {
-    this.btnPrev.disabled = !value;
+  public set disabled(value: boolean) {
+    this.disabledButtons = value;
+    this.updateEnabled();
   }
 
   public setParam(countElements: number): void {
     if (this.countElements !== countElements) {
       this.countElements = countElements;
       this.countPages = Math.ceil(this.countElements / this.limitPage);
+      this.updateEnabled();
     }
-
-    this.enabledPrev = this.numPage !== 1;
-    this.enabledNext = this.numPage < this.countPages;
   }
 
   public nextPage(): void {
     if (this.numPage >= this.countPages) return;
-
-    if (this.countPages > 1 && this.numPage === 1) {
-      this.enabledPrev = true;
-    }
-
     this.numPage += 1;
 
-    if (this.numPage >= this.countPages) {
-      this.enabledNext = false;
-    }
-
+    this.updateEnabled();
     this.cbRenderPage();
   }
 
   public prevPage(): void {
     if (this.numPage <= 1) return;
 
-    if (this.countPages > 1 && this.numPage === this.countPages) {
-      this.enabledNext = true;
-    }
-
     this.numPage -= 1;
 
-    if (this.numPage <= 1) {
-      this.enabledPrev = false;
-    }
-
+    this.updateEnabled();
     this.cbRenderPage();
   }
 }

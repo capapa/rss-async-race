@@ -79,6 +79,8 @@ export default class Track {
     this.finishTime = 0;
     this.engine.status = "started";
     this.btnA.disabled = true;
+    this.btnSelect.disabled = true;
+    this.btnRemove.disabled = true;
     const response = await this.apiCarEvents.setStatusEngine(this.car.id, this.engine.status);
     this.engine.distance = response.distance;
     this.engine.velocity = response.velocity;
@@ -98,6 +100,8 @@ export default class Track {
     this.wrapperImgCar.style.transform = "";
     this.btnA.disabled = false;
     this.btnB.disabled = true;
+    this.btnSelect.disabled = false;
+    this.btnRemove.disabled = false;
   }
 
   private startAnimation(duration: number): void {

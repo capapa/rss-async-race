@@ -106,12 +106,14 @@ export default class Race {
     });
     this.form.btnRace.disabled = true;
     this.form.btnReset.disabled = true;
+    this.paginator.disabled = true;
   }
 
   private async reset(): Promise<void> {
     this.form.btnReset.disabled = true;
     await Promise.all(this.tracks.map((track) => track.setCarInit()));
     this.form.btnRace.disabled = false;
+    this.paginator.disabled = false;
     this.popup.hide();
   }
 
